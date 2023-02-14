@@ -1,6 +1,7 @@
 package filters;
 
 import akka.stream.Materializer;
+import dto.logging.RequestLoggingData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.mvc.Filter;
@@ -12,22 +13,6 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 
 import static net.logstash.logback.argument.StructuredArguments.kv;
-
-class LoggingData {
-    public String method;
-    public String uri;
-
-    public int status;
-
-    public Long duration;
-
-    public LoggingData(String method, String uri, int status, Long duration) {
-        this.method = method;
-        this.uri = uri;
-        this.status = status;
-        this.duration = duration;
-    }
-}
 
 public class LoggingFilter extends Filter {
     private static final Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
@@ -61,11 +46,13 @@ public class LoggingFilter extends Filter {
                             logger.info(
                                     "Request processed ",
                                     kv(
-                                        "resultData", new LoggingData(
-                                            requestHeader.method(),
-                                            requestHeader.uri(),
-                                            result.status(),
-                                            requestTime))
+                                            "resultData", new RequestLoggingData() {{
+                                                setMethod(requestHeader.method());
+                                                setUri(requestHeader.uri());
+                                                setStatus(result.status());
+                                                setDuration(requestTime);
+                                            }}
+                                    )
                             );
 
                             return result.withHeader("Request-Time", "" + requestTime);
