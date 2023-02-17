@@ -8,7 +8,16 @@ ThisBuild / githubWorkflowJavaVersions := Seq(
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 ThisBuild / githubWorkflowBuild := Seq(
   WorkflowStep.Sbt(
-    List("clean", "coverage", "test", "coverageReport", "scalafmtCheckAll"),
+    List(
+      "clean",
+// TODO: add the sbt coverage plugin to enable test coverage addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.9.3")
+//      "coverage",
+      "test",
+// TODO: add the sbt coverage plugin to enable test coverage addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.9.3")
+//      "coverageReport",
+// TODO: add the sbt plugin to enable scala formatting: addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.6") & addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
+//      "scalafmtCheckAll"
+    ),
     id = None,
     name = Some("Test")
   ),
