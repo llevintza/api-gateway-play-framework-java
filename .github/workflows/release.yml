@@ -7,16 +7,16 @@ jobs:
   publish:
     runs-on: ubuntu-20.04
     steps:
-      #- name: Debug secrets
-      #  run: echo ${{ secrets }}
+      - name: Debug secrets
+        run: echo ${{ secrets }}
 
-      #- name: Debug PGP username
-      #  run: echo ${{ secrets.SONATYPE_USERNAME }}
+      - name: Debug PGP username
+        run: echo ${{ secrets.SONATYPE_USERNAME }}
 
-      #- name: Debug PGP info
-      #  env:
-      #    SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-      #  run: echo $SONATYPE_USERNAME
+      - name: Debug PGP info
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        run: echo $SONATYPE_USERNAME
 
       - name: checkout
         uses: actions/checkout@v3.0.2
