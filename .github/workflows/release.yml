@@ -18,12 +18,14 @@ jobs:
       #    SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
       #  run: echo $SONATYPE_USERNAME
 
-      #- name: CI Release
-      - uses: actions/checkout@v3.0.2
+      - name: checkout
+        uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
-      - uses: olafurpg/setup-scala@v13
-      - run: sbt ci-release
+      - name: setup scala
+        uses: olafurpg/setup-scala@v13
+      - name: ci release
+        run: sbt ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
