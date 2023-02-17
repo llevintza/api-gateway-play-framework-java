@@ -24,7 +24,7 @@ jobs:
               
       - name: Display Secret
         run: |
-          echo SONATYPE_USERNAME_ALT
+          echo $SONATYPE_USERNAME_ALT
 
       - name: checkout
         uses: actions/checkout@v3.0.2
