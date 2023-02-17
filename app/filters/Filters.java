@@ -1,7 +1,8 @@
 package filters;
 
-import play.http.DefaultHttpFilters;
 import play.filters.gzip.GzipFilter;
+import play.http.DefaultHttpFilters;
+
 import javax.inject.Inject;
 
 public class Filters extends DefaultHttpFilters {

@@ -1,13 +1,50 @@
-val appVersion = "1.0.0"
-val logstashVersion = "7.2"
-val logbackVersion = "1.4.5"
-val jacksonVersion = "2.14.2"
+ThisBuild / organization := "io.circe"
+ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.7")
+
+
+ThisBuild / githubWorkflowJavaVersions := Seq(
+  sbtghactions.JavaSpec.temurin("11")
+)
+ThisBuild / githubWorkflowPublishTargetBranches := Seq()
+//ThisBuild / githubWorkflowBuild := Seq(
+//  WorkflowStep.Sbt(
+//    List("clean", "coverage", "test", "coverageReport", "scalafmtCheckAll"),
+//    id = None,
+//    name = Some("Test")
+//  ),
+//  WorkflowStep.Use(
+//    UseRef.Public(
+//      "codecov",
+//      "codecov-action",
+//      "v1"
+//    )
+//  )
+//)
+
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
+
+inThisBuild(List(
+  organization := "io.github.llevintza",
+  homepage := Some(url("https://github.com/llevintza/api-gateway-play-framework-java")),
+  // Alternatively License.Apache2 see https://github.com/sbt/librarymanagement/blob/develop/core/src/main/scala/sbt/librarymanagement/License.scala
+  licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
+  developers := List(
+    Developer(
+      "llevintza",
+      "Leo Levintza",
+      "llevintza@gmail.com",
+      url("https://github.com/llevintza")
+    )
+  ))
+)
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
+  .settings(allSettings)
   .settings(
     name := """api-gateway""",
-    version := appVersion,
+    //    version := appVersion,
     scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       guice,
@@ -22,3 +59,53 @@ lazy val root = (project in file("."))
       "com.fasterxml.jackson.module" % "jackson-module-paranamer" % jacksonVersion
     )
   )
+val compilerOptions = Seq(
+  "-deprecation",
+  "-encoding",
+  "UTF-8",
+  "-feature",
+  "-language:existentials",
+  "-language:higherKinds",
+  "-unchecked",
+  "-Ywarn-dead-code",
+  "-Ywarn-numeric-widen"
+)
+//val reactiveMongoVersion = "1.0.7"
+val circeVersion = "0.14.1"
+val scalaTestVersion = "3.2.11"
+val scalaTestPlusVersion = "3.2.11.0"
+val logstashVersion = "7.2"
+val logbackVersion = "1.4.5"
+val jacksonVersion = "2.14.2"
+val baseSettings = Seq(
+  scalacOptions ++= compilerOptions,
+  scalacOptions ++= (
+    if (priorTo2_13(scalaVersion.value))
+      Seq(
+        "-Xfuture",
+        "-Yno-adapted-args",
+        "-Ywarn-unused-import",
+        "-Ypartial-unification"
+      )
+    else
+      Seq(
+        "-Ywarn-unused:imports"
+      )
+    ),
+  Compile / console / scalacOptions ~= {
+    _.filterNot(Set("-Ywarn-unused-import", "-Ywarn-unused:imports"))
+  },
+  Test / console / scalacOptions ~= {
+    _.filterNot(Set("-Ywarn-unused-import", "-Ywarn-unused:imports"))
+  },
+  //  coverageHighlighting := true,
+  //  (Compile / scalastyleSources) ++= (Compile / unmanagedSourceDirectories).value
+)
+
+val allSettings = baseSettings //++ publishSettings
+
+def priorTo2_13(scalaVersion: String): Boolean =
+  CrossVersion.partialVersion(scalaVersion) match {
+    case Some((2, minor)) if minor < 13 => true
+    case _ => false
+  }

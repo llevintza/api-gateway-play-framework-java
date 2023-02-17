@@ -1,7 +1,7 @@
 package views;
 
 public class SuccessResponse extends Response {
-    public  SuccessResponse(){
+    public SuccessResponse() {
         super("ok");
     }
 }
