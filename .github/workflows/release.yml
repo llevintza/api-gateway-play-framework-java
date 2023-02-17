@@ -20,7 +20,7 @@ jobs:
         
       - name: Export Secret
         run: |
-          export SONATYPE_USERNAME_ALT: ${{ secrets.SONATYPE_USERNAME }}
+          export SONATYPE_USERNAME_ALT=${{ secrets.SONATYPE_USERNAME }}
               
       - name: Display Secret
         run: |
