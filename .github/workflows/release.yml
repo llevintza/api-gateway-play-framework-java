@@ -13,10 +13,18 @@ jobs:
       - name: Debug PGP username
         run: echo ${{ secrets.SONATYPE_USERNAME }}
 
-      - name: Debug PGP info
+      - name: Set secret & display value
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         run: echo $SONATYPE_USERNAME
+        
+      - name: Export Secret
+        run: |
+          export SONATYPE_USERNAME2: ${{ secrets.SONATYPE_USERNAME }}
+              
+      - name: Display Secret
+        run: |
+          echo SONATYPE_USERNAME2  
 
       - name: checkout
         uses: actions/checkout@v3.0.2
