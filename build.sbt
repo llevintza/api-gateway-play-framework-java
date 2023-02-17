@@ -1,5 +1,5 @@
 ThisBuild / organization := "io.github.llevintza"
-ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.7")
+ThisBuild / crossScalaVersions := Seq("2.13.10")
 
 
 ThisBuild / githubWorkflowJavaVersions := Seq(
@@ -52,7 +52,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """api-gateway""",
     //    version := appVersion,
-    scalaVersion := "2.13.10",
+    //    scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       guice,
       "net.logstash.logback" % "logstash-logback-encoder" % logstashVersion,
