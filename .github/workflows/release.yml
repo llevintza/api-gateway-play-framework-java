@@ -13,10 +13,10 @@ jobs:
       #- name: Debug PGP username
       #  run: echo ${{ secrets.SONATYPE_USERNAME }}
 
-      - name: Debug PGP info
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-        run: echo $SONATYPE_USERNAME
+      #- name: Debug PGP info
+      #  env:
+      #    SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+      #  run: echo $SONATYPE_USERNAME
 
       - name: CI Release
       - uses: actions/checkout@v3.0.2
