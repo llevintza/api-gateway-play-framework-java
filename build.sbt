@@ -1,25 +1,32 @@
-ThisBuild / organization := "io.circe"
+ThisBuild / organization := "io.github.llevintza"
 ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.7")
 
 
 ThisBuild / githubWorkflowJavaVersions := Seq(
-  sbtghactions.JavaSpec.temurin("11")
+  sbtghactions.JavaSpec.temurin("11"),
 )
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
-//ThisBuild / githubWorkflowBuild := Seq(
-//  WorkflowStep.Sbt(
-//    List("clean", "coverage", "test", "coverageReport", "scalafmtCheckAll"),
-//    id = None,
-//    name = Some("Test")
-//  ),
-//  WorkflowStep.Use(
-//    UseRef.Public(
-//      "codecov",
-//      "codecov-action",
-//      "v1"
-//    )
-//  )
-//)
+ThisBuild / githubWorkflowBuild := Seq(
+  WorkflowStep.Sbt(
+    List("clean", "coverage", "test", "coverageReport", "scalafmtCheckAll"),
+    id = None,
+    name = Some("Test")
+  ),
+  WorkflowStep.Use(
+    UseRef.Public(
+      "codecov",
+      "codecov-action",
+      "v1"
+    )
+  )
+)
+
+ThisBuild / githubWorkflowPublishTargetBranches :=
+  Seq(
+    RefPredicate.StartsWith(Ref.Tag("v")),
+    RefPredicate.StartsWith(Ref.Tag("release/")),
+    RefPredicate.Equals(Ref.Branch("main"))
+  )
 
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
 ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
@@ -59,6 +66,7 @@ lazy val root = (project in file("."))
       "com.fasterxml.jackson.module" % "jackson-module-paranamer" % jacksonVersion
     )
   )
+
 val compilerOptions = Seq(
   "-deprecation",
   "-encoding",
@@ -70,13 +78,16 @@ val compilerOptions = Seq(
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen"
 )
+
 //val reactiveMongoVersion = "1.0.7"
-val circeVersion = "0.14.1"
+//val circeVersion = "0.14.1"
+
 val scalaTestVersion = "3.2.11"
 val scalaTestPlusVersion = "3.2.11.0"
 val logstashVersion = "7.2"
 val logbackVersion = "1.4.5"
 val jacksonVersion = "2.14.2"
+
 val baseSettings = Seq(
   scalacOptions ++= compilerOptions,
   scalacOptions ++= (
