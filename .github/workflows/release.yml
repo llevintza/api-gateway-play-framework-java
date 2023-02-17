@@ -20,11 +20,11 @@ jobs:
         
       - name: Export Secret
         run: |
-          export SONATYPE_USERNAME2: ${{ secrets.SONATYPE_USERNAME }}
+          export SONATYPE_USERNAME_ALT: ${{ secrets.SONATYPE_USERNAME }}
               
       - name: Display Secret
         run: |
-          echo SONATYPE_USERNAME2  
+          echo SONATYPE_USERNAME_ALT
 
       - name: checkout
         uses: actions/checkout@v3.0.2
