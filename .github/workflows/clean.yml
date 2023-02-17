@@ -5,18 +5,18 @@
 # change your sbt build configuration to revise the workflow description
 # to meet your needs, then regenerate this file.
 
-name: clean
+name: Clean
 
 on: push
 
 jobs:
   delete-artifacts:
-    name: delete artifacts
+    name: Delete Artifacts
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: delete artifacts
+      - name: Delete artifacts
         run: |
           # Customize those three lines with your repository and credentials:
           REPO=${GITHUB_API_URL}/repos/${{ github.repository }}
