@@ -7,25 +7,6 @@ jobs:
   publish:
     runs-on: ubuntu-20.04
     steps:
-      - name: Debug secrets
-        run: echo ${{ secrets }}
-
-      - name: Debug PGP username
-        run: echo ${{ secrets.SONATYPE_USERNAME }}
-
-      - name: Set secret & display value
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-        run: echo $SONATYPE_USERNAME
-        
-      - name: Export Secret
-        run: |
-          export SONATYPE_USERNAME_ALT=${{ secrets.SONATYPE_USERNAME }}
-              
-      - name: Display Secret
-        run: |
-          echo $SONATYPE_USERNAME_ALT
-
       - name: checkout
         uses: actions/checkout@v3.0.2
         with:
